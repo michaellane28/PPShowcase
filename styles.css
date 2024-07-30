@@ -1,0 +1,225 @@
+@font-face {
+    font-family: 'MadeTommyRegular';
+    src: url('MADE TOMMY Regular_PERSONAL USE.otf') format('opentype');
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #242424;
+}
+
+/* Fixed navigation bar */
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #242424;
+    padding: 19px 38px;
+    color: white;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    height: 40px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+nav img {
+    margin: 0;
+    margin-left: 150px;
+    width: 213px;
+    height: 120px;
+    padding-top: 25px;
+}
+
+nav a {
+    color: #707070;
+    text-decoration: none;
+    margin-right: 150px;
+    font-family: 'MadeTommyRegular', sans-serif;
+    padding-top: 10px;
+    font-size: large;
+}
+
+nav a:hover {
+    color: #a0a0a0;
+}
+
+/* Fixed date slider */
+.date-slider {
+    width: 100%;
+    background-color: #242424;
+    display: flex;
+    justify-content: center; /* Center the inner container */
+    padding: 10px 0; /* Padding to give some space around the buttons and date */
+    position: fixed;
+    top: 75px; /* Adjust this value based on the height of your nav bar */
+    z-index: 1000;
+    height: 60px;
+    transition: box-shadow 0.3s ease-in-out;
+    color: #707070;
+    font-family: 'MadeTommyRegular', sans-serif;
+}
+
+.date-slider.shadow {
+    box-shadow: 0 8px 8px -4px rgba(0, 0, 0, 0.5);
+}
+
+.date-slider-inner {
+    display: flex;
+    align-items: center;
+    position: relative; /* For absolute positioning of buttons */
+}
+
+.date-slider button {
+    background-color: #707070;
+    color: #242424;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 40px; /* Fixed width for consistency */
+    position: absolute;
+}
+
+.date-slider button:hover {
+    background-color: #a0a0a0;
+}
+
+.date-slider button#prevDate {
+    left: -50px; /* Position left button relative to center */
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.date-slider button#nextDate {
+    right: -50px; /* Position right button relative to center */
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.date-slider span {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0 60px; /* Space between date and buttons */
+}
+
+/* Adjust gamesList to avoid overlap */
+#gamesList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 170px; /* Add enough padding to avoid overlap with fixed elements */
+}
+
+.game-item {
+    border: 3px solid #e23d4b; 
+    border-radius: 100px;
+    padding: 20px 10px 10px 10px; /* Added top padding */
+    margin-bottom: 10px;
+    width: 75%; /* Set width to 75% */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1a1a1a; /* Optional: Add a background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
+}
+
+.players-info {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Ensure vertical centering */
+    width: 100%;
+    gap: 30px; /* Adjust gap as needed */
+    font-family: 'MadeTommyRegular', sans-serif;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 5px;
+}
+
+.player-name {
+    font-size: 20px;
+    color: #e23d4b;
+}
+
+.game-vs {
+    display: flex;
+    align-items: center; /* Center vertically */
+    padding-left: 75px;
+    padding-right: 75px;
+    color: #707070;
+}
+
+.game-vs .vs {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.game-plus {
+    display: flex;
+    align-items: center; /* Center vertically */
+    padding-left: 35px;
+    padding-right: 35px;
+    color: #707070;
+}
+
+.game-plus .plus {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-logo {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 0px;
+    padding-top: 11px;
+}
+
+.team-name {
+    text-align: center;
+    font-family: 'MadeTommyRegular', sans-serif;
+    font-size: 20px;
+    color: #707070;
+}
+
+.game-time {
+    margin-top: 10px;
+    color: #707070;
+    font-family: 'MadeTommyRegular', sans-serif;
+    font-size: 15px;
+}
+
+#noGamesImage {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    padding-top: 150px;
+}

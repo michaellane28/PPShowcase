@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPShowcase</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <img src="ppshowcaseLogo.png" alt="ppshowcaseLogo">
+            <a href="#about">about</a>
+        </div>
+    </nav>
+    <div class="date-slider">
+        <div class="date-slider-inner">
+            <button id="prevDate">&lt;</button>
+            <span id="currentDate">10/04/2024</span>
+            <button id="nextDate">&gt;</button>
+        </div>
+    </div>
+
+    <div id="gamesList"></div>
+    <!-- Add the image element -->
+    <img id="noGamesImage" src="noPicksDesign.png" alt="No Games" style="display: none;">
+
+    <script src="script.js"></script>
+</body>
+</html>
