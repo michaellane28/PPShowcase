@@ -72,7 +72,7 @@ def main():
     schedule_df = pd.read_excel('formatted_NHL_2024-25_Schedule.xlsx')
 
     # Filter schedule by the current date
-    selected_date_games = schedule_df[schedule_df['Date'] == '10/08/2024']
+    selected_date_games = schedule_df[schedule_df['Date'] == '10/09/2024']
 
     games = []
 
