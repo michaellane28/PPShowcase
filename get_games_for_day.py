@@ -2,6 +2,7 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import os
+from datetime import datetime
 
 def scrape_first_line_players(url):
     driver = webdriver.Chrome()
@@ -25,7 +26,7 @@ def scrape_first_powerplay_players(url):
     driver.quit()
     return selected_team, player_names
 
-def main(date_to_check):
+def main():
     # Define the URL for each team
     TEAM_URLS = {
         'Anaheim Ducks': 'https://www.dailyfaceoff.com/teams/anaheim-ducks/line-combinations',
@@ -64,12 +65,14 @@ def main(date_to_check):
 
     TOP_5_PENALTY_TEAMS = ['Anaheim Ducks', 'Florida Panthers', 'Minnesota Wild', 'Montreal Canadiens', 'Ottawa Senators']
 
+    # Get the current date
+    current_date = datetime.now().strftime('%m/%d/%Y')
 
     # Read the schedule
     schedule_df = pd.read_excel('formatted_NHL_2024-25_Schedule.xlsx')
 
-    # Filter schedule by the specified date
-    selected_date_games = schedule_df[schedule_df['Date'] == date_to_check]
+    # Filter schedule by the current date
+    selected_date_games = schedule_df[schedule_df['Date'] == current_date]
 
     games = []
 
@@ -110,7 +113,7 @@ def main(date_to_check):
                     'Player3': home_first_and_powerplay[2] if len(home_first_and_powerplay) > 2 else ''
                 })
 
-        # Check if the file exists
+    # Check if the file exists
     file_path = 'filtered_schedule.xlsx'
     if os.path.exists(file_path):
         # If the file exists, read the existing data
@@ -125,8 +128,5 @@ def main(date_to_check):
     # Save the combined data to Excel
     combined_df.to_excel(file_path, index=False)
 
-
 if __name__ == "__main__":
-    # Specify the date to check
-    DATE_TO_CHECK = '10/08/2024'
-    main(DATE_TO_CHECK)
+    main()
