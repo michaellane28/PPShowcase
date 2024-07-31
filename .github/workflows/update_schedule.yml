@@ -23,30 +23,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas selenium openpyxl # Added openpyxl
 
-      - name: Install Google Chrome
-        run: |
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb
-          sudo apt-get install -f
-
-      - name: Remove old ChromeDriver
-        run: |
-          sudo rm /usr/local/bin/chromedriver || true
-
-      - name: Install ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+')
-          CHROMEDRIVER_VERSION=$(curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION} || echo "latest")
-          wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
-
-      - name: Debug Chrome and ChromeDriver Versions
-        run: |
-          google-chrome --version
-          chromedriver --version
-
       - name: Run script
         run: |
           python get_games_for_day.py
