@@ -1,11 +1,17 @@
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 import os
 from datetime import datetime
 
 def scrape_first_line_players(url):
-    driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
     team_select = driver.find_element(By.CSS_SELECTOR, 'select.h-8.border.border-black')
     selected_team = team_select.find_element(By.CSS_SELECTOR, 'option:checked').text
@@ -16,7 +22,12 @@ def scrape_first_line_players(url):
     return selected_team, player_names
 
 def scrape_first_powerplay_players(url):
-    driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
     team_select = driver.find_element(By.CSS_SELECTOR, 'select.h-8.border.border-black')
     selected_team = team_select.find_element(By.CSS_SELECTOR, 'option:checked').text
