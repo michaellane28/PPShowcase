@@ -1,29 +1,45 @@
 import pandas as pd
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import os
 from datetime import datetime
 
+def create_driver():
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')  # Run in headless mode
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--disable-gpu')  # Only needed if you run into issues with GPU acceleration
+    service = Service('/usr/local/bin/chromedriver')  # Ensure this path matches the location of your ChromeDriver
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    return driver
+
 def scrape_first_line_players(url):
-    driver = webdriver.Chrome()
-    driver.get(url)
-    team_select = driver.find_element(By.CSS_SELECTOR, 'select.h-8.border.border-black')
-    selected_team = team_select.find_element(By.CSS_SELECTOR, 'option:checked').text
-    forwards_section = driver.find_element(By.ID, 'forwards').find_element(By.XPATH, '..').find_element(By.XPATH, '..')
-    players = forwards_section.find_elements(By.CSS_SELECTOR, 'div.flex.flex-row.justify-center span')
-    player_names = [player.text for player in players[:4]]
-    driver.quit()
+    driver = create_driver()
+    try:
+        driver.get(url)
+        team_select = driver.find_element(By.CSS_SELECTOR, 'select.h-8.border.border-black')
+        selected_team = team_select.find_element(By.CSS_SELECTOR, 'option:checked').text
+        forwards_section = driver.find_element(By.ID, 'forwards').find_element(By.XPATH, '..').find_element(By.XPATH, '..')
+        players = forwards_section.find_elements(By.CSS_SELECTOR, 'div.flex.flex-row.justify-center span')
+        player_names = [player.text for player in players[:4]]
+    finally:
+        driver.quit()
     return selected_team, player_names
 
 def scrape_first_powerplay_players(url):
-    driver = webdriver.Chrome()
-    driver.get(url)
-    team_select = driver.find_element(By.CSS_SELECTOR, 'select.h-8.border.border-black')
-    selected_team = team_select.find_element(By.CSS_SELECTOR, 'option:checked').text
-    powerplay_section = driver.find_element(By.ID, 'powerplay').find_element(By.XPATH, '..').find_element(By.XPATH, '..')
-    players = powerplay_section.find_elements(By.CSS_SELECTOR, 'div.flex.flex-row.justify-center span')
-    player_names = [player.text for player in players]
-    driver.quit()
+    driver = create_driver()
+    try:
+        driver.get(url)
+        team_select = driver.find_element(By.CSS_SELECTOR, 'select.h-8.border.border-black')
+        selected_team = team_select.find_element(By.CSS_SELECTOR, 'option:checked').text
+        powerplay_section = driver.find_element(By.ID, 'powerplay').find_element(By.XPATH, '..').find_element(By.XPATH, '..')
+        players = powerplay_section.find_elements(By.CSS_SELECTOR, 'div.flex.flex-row.justify-center span')
+        player_names = [player.text for player in players]
+    finally:
+        driver.quit()
     return selected_team, player_names
 
 def main():
@@ -65,14 +81,14 @@ def main():
 
     TOP_5_PENALTY_TEAMS = ['Anaheim Ducks', 'Florida Panthers', 'Minnesota Wild', 'Montreal Canadiens', 'Ottawa Senators']
 
-    # Get the current date
-    current_date = datetime.now().strftime('%m/%d/%Y')
+    # Use a specific date for testing
+    specific_date = '10/09/2024'
 
     # Read the schedule
     schedule_df = pd.read_excel('formatted_NHL_2024-25_Schedule.xlsx')
 
-    # Filter schedule by the current date
-    selected_date_games = schedule_df[schedule_df['Date'] == '10/09/2024']
+    # Filter schedule by the specific date
+    selected_date_games = schedule_df[schedule_df['Date'] == specific_date]
 
     games = []
 

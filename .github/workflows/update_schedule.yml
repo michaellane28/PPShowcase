@@ -11,18 +11,36 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3 # Updated to v3
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5 # Updated to v5
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.12' # Specify the Python version you need
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas selenium openpyxl # Added openpyxl
+          pip install pandas selenium openpyxl
+
+      - name: Download ChromeDriver
+        run: |
+          CHROME_DRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          curl -sS -o chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/chromedriver
+          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Run script
         run: |
           python get_games_for_day.py
+        env:
+          DISPLAY: ':99.0'
+
+      - name: Print environment details
+        run: |
+          python -m pip show selenium
+          python -m pip show pandas
+          python -m pip show openpyxl
+          chromedriver --version
+          google-chrome --version
