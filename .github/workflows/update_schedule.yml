@@ -2,7 +2,7 @@ name: Update Schedule
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs at midnight every day
+    - cron: '0 6 * * *' # Runs at midnight every day (CST)
   workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
 
 jobs:
