@@ -76,7 +76,7 @@ def main():
 
     TOP_5_PENALTY_TEAMS = ['Anaheim Ducks', 'Florida Panthers', 'Minnesota Wild', 'Montreal Canadiens', 'Ottawa Senators']
 
-    test_date = '10/21/2024'  # Replace with your desired test date
+    test_date = '10/09/2024'  # Replace with your desired test date
 
     # Read the schedule
     schedule_df = pd.read_excel('formatted_NHL_2024-25_Schedule.xlsx')
