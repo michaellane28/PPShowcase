@@ -1,0 +1,42 @@
+name: Update Max Date
+
+on:
+  schedule:
+    - cron: '10 6 * * *' # Runs at 12:10 AM CST every day
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+
+jobs:
+  update_max_date:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Read maxDate from script.js
+        id: read_max_date
+        run: |
+          max_date_line=$(grep 'maxDate' script.js)
+          current_max_date=$(echo $max_date_line | grep -oP '\d{4}-\d{2}-\d{2}')
+          echo "current_max_date=$current_max_date" >> $GITHUB_ENV
+
+      - name: Update maxDate if necessary
+        run: |
+          current_date=$(date +'%Y-%m-%d')
+          if [[ "$current_date" > "$current_max_date" ]]; then
+            sed -i "s/$current_max_date/$current_date/" script.js
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git add script.js
+          git commit -m "Update maxDate to $current_date"
+          git push
+        if: steps.update_max_date.outputs.date_updated == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
