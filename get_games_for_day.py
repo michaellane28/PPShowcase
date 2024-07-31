@@ -77,13 +77,15 @@ def main():
     TOP_5_PENALTY_TEAMS = ['Anaheim Ducks', 'Florida Panthers', 'Minnesota Wild', 'Montreal Canadiens', 'Ottawa Senators']
 
      # Get the current date
-    current_date = datetime.now().strftime('%m/%d/%Y')
+    #current_date = datetime.now().strftime('%m/%d/%Y')
+
+    test_date = '10/10/2024'
 
     # Read the schedule
     schedule_df = pd.read_excel('formatted_NHL_2024-25_Schedule.xlsx')
 
     # Filter schedule by the current date
-    selected_date_games = schedule_df[schedule_df['Date'] == current_date]
+    selected_date_games = schedule_df[schedule_df['Date'] == test_date]
 
     games = []
 
