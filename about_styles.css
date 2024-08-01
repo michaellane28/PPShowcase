@@ -1,9 +1,62 @@
-body {
-    font-family: Arial, sans-serif;
+body, html {
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    height: 100%;
     background-color: #242424;
+    text-align: center;
+}
+
+
+.home-button {
+    position: absolute;
+    top: 40px; /* Adjust this value as needed */
+    left: 150px; /* Adjust this value as needed */
+}
+
+.home-button a {
+    color: #707070;
+    text-decoration: none;
+    font-family: 'MadeTommyRegular', sans-serif;
+    padding-top: 10px;
+    font-size: large;
+}
+
+.home-button a:hover {
+    color: #a0a0a0;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.image-container img {
+    width: 427px;
+    height: 240px;
+}
+
+.paragraph-container {
+    display: flex;
+    justify-content: center;
+    margin: 0 180px; /* Adds space on left and right */
+}
+
+.paragraph-container p {
+    color: #707070;
+    text-decoration: none;
+    font-family: 'MadeTommyRegular', sans-serif;
+    padding-top: 10px;
+    font-size: large;
+}
+
+.team-logos-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Space between paragraph and images */
+}
+
+.team-logo {
+    width: 100px; /* Set width of each logo */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 10px; /* Space between logos */
 }
