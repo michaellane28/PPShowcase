@@ -2,7 +2,7 @@ name: Update Max Date
 
 on:
   schedule:
-    - cron: '10 6 * * *' # Runs at 12:10 AM CDT every day
+    - cron: '10 6 * * *' # Runs at 6:10 AM UTC every day
   workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
 
 jobs:
@@ -35,5 +35,12 @@ jobs:
           git add script.js
           git commit -m "Increment maxDate by one day"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull latest changes
+        run: |
+          git fetch origin
+          git pull origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
