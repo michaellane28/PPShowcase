@@ -1,3 +1,14 @@
+/*
+    script.js
+    
+        - Responsible for formatting index.html elements
+
+        - Sets  minimum and maximum dates that will be shown on the website at any given time
+            - Values are updated via GitHub Actions
+        
+        -
+*/
+
 // Load and parse Excel files
 const readExcelFile = (filePath, callback) => {
     fetch(filePath)
@@ -14,9 +25,9 @@ const readExcelFile = (filePath, callback) => {
 // Global variables
 let playersData = [];
 let scheduleData = [];
-const minDate = new Date(Date.UTC(2024, 9, 4)); // October 4, 2024
-const maxDate = new Date(Date.UTC(2024, 9, 11));
-let currentDate = new Date(Date.UTC(2024, 9, 11));
+const minDate = new Date(Date.UTC(2024, 9, 4)); 
+const maxDate = new Date(Date.UTC(2024, 9, 11)); // UPDATED BY GITHUB ACTION
+let currentDate = new Date(Date.UTC(2024, 9, 11)); // UPDATED BY GITHUB ACTION
 
 // DOM elements
 const currentDateElem = document.getElementById("currentDate");
@@ -28,7 +39,7 @@ const noGamesImage = document.getElementById('noGamesImage');
 // Format date as MM/DD/YYYY
 const formatDate = (date) => {
     const day = String(date.getUTCDate()).padStart(2, '0');
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); 
     const year = date.getUTCFullYear();
     return `${month}/${day}/${year}`;
 };
@@ -42,11 +53,11 @@ const getPlayerImage = (playerName) => {
         return player.imageUrl;
     } else {
         console.log('Player Image URL: Not found, using default image'); // Debugging line
-        return 'default-skater.png'; // Path to the default image
+        return 'default-skater.png'; // Default image for players not found in player dataset
     }
 };
 
-// Get team logo path
+// Get team logo
 const getTeamLogo = (teamName) => {
     const normalizedTeamName = teamName.toLowerCase().replace(/ /g, '_');
     const fileName = normalizedTeamName + '.png';

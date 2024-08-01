@@ -1,3 +1,8 @@
+# update_dates.py
+#
+#   - Responsible for updating the maxDate and currentDate values in script.js
+#   - Runs once per day, automated by GitHub Actions
+
 import re
 from datetime import datetime, timedelta
 

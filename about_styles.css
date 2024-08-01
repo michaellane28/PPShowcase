@@ -1,3 +1,15 @@
+/* 
+    about_styles.css
+        - Includes styling for entire "About" page
+*/
+
+/* Font used for whole site */
+@font-face {
+    font-family: 'MadeTommyRegular';
+    src: url('MADE TOMMY Regular_PERSONAL USE.otf') format('opentype');
+}
+
+/* Main Body */
 body, html {
     margin: 0;
     padding: 0;
@@ -6,11 +18,11 @@ body, html {
     text-align: center;
 }
 
-
+/* Home Button */
 .home-button {
     position: absolute;
-    top: 40px; /* Adjust this value as needed */
-    left: 150px; /* Adjust this value as needed */
+    top: 40px; 
+    left: 150px; 
 }
 
 .home-button a {
@@ -25,6 +37,7 @@ body, html {
     color: #a0a0a0;
 }
 
+/* Image Container */
 .image-container {
     display: flex;
     justify-content: center;
@@ -35,10 +48,11 @@ body, html {
     height: 240px;
 }
 
+/* Paragraph Container */
 .paragraph-container {
     display: flex;
     justify-content: center;
-    margin: 0 180px; /* Adds space on left and right */
+    margin: 0 180px;
 }
 
 .paragraph-container p {
@@ -49,14 +63,15 @@ body, html {
     font-size: large;
 }
 
+/* Team Logos Container */
 .team-logos-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* Space between paragraph and images */
+    margin-top: 20px; 
 }
 
 .team-logo {
-    width: 100px; /* Set width of each logo */
-    height: auto; /* Maintain aspect ratio */
-    margin: 0 10px; /* Space between logos */
+    width: 100px;
+    height: auto;
+    margin: 0 10px; 
 }

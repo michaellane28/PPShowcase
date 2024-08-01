@@ -1,9 +1,15 @@
+# update_dates.yml
+#
+#   - Action called to run update_dates.py
+#
+#
+
 name: Update Dates
 
 on:
   schedule:
-    - cron: '10 6 * * *' # Runs at midnight every day
-  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+    - cron: '10 6 * * *' # Runs everyday at 12:10 CDT
+  workflow_dispatch: # Manual Trigger
 
 jobs:
   update_dates:
