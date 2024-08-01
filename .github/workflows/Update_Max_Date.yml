@@ -2,69 +2,37 @@ name: Update Max Date
 
 on:
   schedule:
-    - cron: '10 6 * * *'  # Runs at 12:10 AM Central Time every day
-  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+    # Runs every day at 7:07 AM UTC (which is midnight Central Time)
+    - cron: '7 6 * * *'
 
 jobs:
-  update_max_date:
+  update_maxdate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.12'  # Adjust to the version you're using
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pandas
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # Install any required Python packages
 
-      - name: Read maxDate from script.js
-        id: read_max_date
-        run: |
-          if grep -q 'const maxDate = new Date(Date.UTC' script.js; then
-            max_date_line=$(grep 'const maxDate = new Date(Date.UTC' script.js)
-            year=$(echo $max_date_line | grep -oP 'Date.UTC\(\K\d{4}')
-            month=$(echo $max_date_line | grep -oP 'Date.UTC\(\d{4},\K\d{1,2}')
-            day=$(echo $max_date_line | grep -oP 'Date.UTC\(\d{4},\d{1,2},\K\d{1,2}')
-            # Convert zero-based month to 1-based month
-            month=$(($month + 1))
-            # Ensure month and day are two digits
-            month=$(printf "%02d" $month)
-            day=$(printf "%02d" $day)
-            current_max_date="$year-$month-$day"
-            echo "current_max_date=$current_max_date" >> $GITHUB_ENV
-          else
-            echo "maxDate variable not found in script.js"
-            exit 1
-          fi
+    - name: Run update script
+      run: |
+        python update_maxdate.py
 
-      - name: Get current date
-        id: get_current_date
-        run: |
-          current_date=$(date -u +"%Y-%m-%d")
-          echo "current_date=$current_date" >> $GITHUB_ENV
-
-      - name: Update script.js with new maxDate
-        id: update_max_date
-        run: |
-          if [ "$current_date" > "$current_max_date" ]; then
-            sed -i "s/const maxDate = new Date(Date.UTC($current_max_date));/const maxDate = new Date(Date.UTC($current_date));/" script.js
-            echo "Updated maxDate in script.js to $current_date"
-          else
-            echo "No update needed. Current date is not greater than maxDate."
-          fi
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name 'Michael Lane'
-          git config --global user.email 'michaellane2828@gmail.com'
-          git add script.js
-          git commit -m "Update maxDate in script.js if current date is greater"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Commit updated script.js
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add script.js
+        git commit -m 'Update maxDate in script.js'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
