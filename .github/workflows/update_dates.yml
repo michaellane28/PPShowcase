@@ -1,4 +1,4 @@
-name: Update Max Date
+name: Update Dates
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
 
 jobs:
-  update_max_date:
+  update_dates:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pip
 
       - name: Run update script
-        run: python update_max_date.py
+        run: python update_dates.py
 
       - name: Configure git
         run: |
@@ -33,8 +33,7 @@ jobs:
       - name: Commit and push changes
         run: |
           git add script.js
-          git commit -m "Update maxDate in script.js"
+          git commit -m "Update maxDate and currentDate in script.js"
           git push
         env:
-          # Provide a GitHub token to allow the action to push changes
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
