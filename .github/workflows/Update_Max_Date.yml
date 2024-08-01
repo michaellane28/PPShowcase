@@ -2,7 +2,7 @@ name: Update Max Date
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs at midnight every day
+    - cron: '10 6 * * *' # Runs at midnight every day
   workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
 
 jobs:
