@@ -37,8 +37,13 @@ const formatDate = (date) => {
 const getPlayerImage = (playerName) => {
     const normalizedPlayerName = playerName.toLowerCase(); // Normalize input name to lowercase
     const player = playersData.find(p => p.name.toLowerCase() === normalizedPlayerName); // Normalize names in data to lowercase
-    console.log('Player Image URL:', player ? player.imageUrl : 'Not found'); // Debugging line
-    return player ? player.imageUrl : '';
+    if (player && player.imageUrl) {
+        console.log('Player Image URL:', player.imageUrl); // Debugging line
+        return player.imageUrl;
+    } else {
+        console.log('Player Image URL: Not found, using default image'); // Debugging line
+        return 'default-skater.png'; // Path to the default image
+    }
 };
 
 // Get team logo path
