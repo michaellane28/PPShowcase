@@ -2,37 +2,38 @@ name: Update Max Date
 
 on:
   schedule:
-    # Runs every day at 7:07 AM UTC (which is midnight Central Time)
-    - cron: '7 6 * * *'
+    - cron: '10 6 * * *' # Runs at 12:10 AM CDT every day
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
 
 jobs:
-  update_maxdate:
+  update_max_date:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.12'  # Adjust to the version you're using
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt  # Install any required Python packages
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas selenium openpyxl
 
-    - name: Run update script
-      run: |
-        python update_maxdate.py
+      - name: Update maxDate in script.js
+        run: |
+          # Use sed to update maxDate value in script.js
+          sed -i 's/maxDate = new Date(Date.UTC(2024, 9, 9));/maxDate = new Date(Date.UTC(2024, 9, 10));/' script.js
 
-    - name: Commit updated script.js
-      run: |
-        git config --global user.name 'GitHub Actions'
-        git config --global user.email 'actions@github.com'
-        git add script.js
-        git commit -m 'Update maxDate in script.js'
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'Michael Lane'
+          git config --global user.email 'michaellane2828@gmail.com'
+          git add script.js
+          git commit -m "Increment maxDate by one day"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
