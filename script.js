@@ -15,7 +15,7 @@ const readExcelFile = (filePath, callback) => {
 let playersData = [];
 let scheduleData = [];
 const minDate = new Date(Date.UTC(2024, 9, 4)); // October 4, 2024
-const maxDate = new Date(Date.UTC(2024, 9, 9));
+const maxDate = new Date(Date.UTC(2024, 9, 10));
 let currentDate = new Date(Date.UTC(2024, 9, 8));
 
 // DOM elements
