@@ -2,7 +2,7 @@ name: Update Max Date
 
 on:
   schedule:
-    - cron: '10 6 * * *'  # Runs at 12:10 AM UTC every day
+    - cron: '10 0 * * *'  # Runs at 12:10 AM UTC every day
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
@@ -13,28 +13,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Extract current maxDate
-        id: extract_date
+      - name: Extract and increment maxDate
+        id: update_date
         run: |
-          # Use grep and awk to extract the current maxDate value from script.js
-          current_date=$(grep -oP 'const maxDate = new Date\(Date.UTC\(\d{4}, \d{1,2}, \d{1,2}\)\);' script.js | awk -F '[(),]' '{print $3 "/" $4 "/" $5}')
-          echo "Current maxDate: $current_date"
-          echo "current_date=$current_date" >> $GITHUB_ENV
-
-      - name: Calculate new maxDate
-        id: calculate_date
-        run: |
-          # Convert current_date to the format used in JavaScript Date.UTC()
-          current_date=$(date -d "$current_date" '+%Y, %m, %d')
-          # Increment date by one day
-          new_date=$(date -d "$current_date + 1 day" '+%Y, %m, %d')
-          echo "New maxDate: $new_date"
-          echo "new_date=$new_date" >> $GITHUB_ENV
-
-      - name: Update maxDate in script.js
-        run: |
-          # Use sed to replace the old maxDate value with the new one
-          sed -i "s/const maxDate = new Date(Date.UTC(.*));/const maxDate = new Date(Date.UTC($new_date));/" script.js
+          # Extract the current maxDate value from script.js
+          max_date=$(grep -oP '(?<=const maxDate = new Date\(Date.UTC\(\d{4}, \d{1,2}, )\d{1,2}(?=\)\);)' script.js)
+          
+          # Extract year, month, and day from max_date
+          year=$(echo $max_date | awk -F'[(),]' '{print $2}')
+          month=$(echo $max_date | awk -F'[(),]' '{print $3}')
+          day=$(echo $max_date | awk -F'[(),]' '{print $4}')
+          
+          # Increment the date by one day
+          new_date=$(date -d "$year-$month-$day +1 day" +'%d')
+          new_year=$(date -d "$year-$month-$day +1 day" +'%Y')
+          new_month=$(date -d "$year-$month-$day +1 day" +'%m')
+          
+          # Update script.js with the new maxDate value
+          sed -i "s/const maxDate = new Date(Date.UTC($year, $month-1, $day));/const maxDate = new Date(Date.UTC($new_year, $new_month-1, $new_date));/" script.js
+          
+          # Verify the changes
+          git diff
 
       - name: Commit and push changes
         run: |
