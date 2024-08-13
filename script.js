@@ -26,8 +26,8 @@ const readExcelFile = (filePath, callback) => {
 let playersData = [];
 let scheduleData = [];
 const minDate = new Date(Date.UTC(2024, 9, 4)); 
-const maxDate = new Date(Date.UTC(2024, 9, 22)); // UPDATED BY GITHUB ACTION
-let currentDate = new Date(Date.UTC(2024, 9, 22)); // UPDATED BY GITHUB ACTION
+const maxDate = new Date(Date.UTC(2024, 9, 23)); // UPDATED BY GITHUB ACTION
+let currentDate = new Date(Date.UTC(2024, 9, 23)); // UPDATED BY GITHUB ACTION
 
 // DOM elements
 const currentDateElem = document.getElementById("currentDate");
